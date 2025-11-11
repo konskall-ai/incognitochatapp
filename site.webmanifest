@@ -1,6 +1,6 @@
 {
-  "name": "Incognito Chat Ap",
-  "short_name": "Incognito",
+  "name": "Incognito Chat App",
+  "short_name": "Incognito Chat App",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
