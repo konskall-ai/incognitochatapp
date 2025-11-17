@@ -1021,8 +1021,8 @@ document.addEventListener('visibilitychange', () => {
   let avatarURL = localStorage.getItem("chatAvatarURL");
   let chatPin = localStorage.getItem("chatPin");
   let roomName = localStorage.getItem("chatRoomName");
-  let presenceInterval = null;
-  let presenceRef = null;
+  let Interval = null;
+  let Ref = null;
   let unsubscribeParticipants = null;
   const usernameForm = document.getElementById("usernameForm");
   const usernameInput = document.getElementById("usernameInput");
@@ -1040,12 +1040,12 @@ exitChatBtn.onclick = () => {
 if (unsubscribeMessages) {
    unsubscribeMessages();  // Σταμάτα τον προηγούμενο listener άμεσα!
 }
-stopPresenceUpdates();
+stopUpdates();
   if (currentUser && chatPin) {
     db.collection("chats").doc(chatPin)
-      .collection("presence").doc(currentUser.uid)
+      .collection("").doc(currentUser.uid)
       .delete()
-      .catch(e => console.log("Σφάλμα διαγραφής presence:", e));
+      .catch(e => console.log("Deletion error :", e));
   }
   if (unsubscribeParticipants) {
     unsubscribeParticipants();
@@ -1180,37 +1180,37 @@ function insertEmoji(emoji) {
   sendBtn.disabled = msgInput.value.trim().length === 0;
   emojiPicker.classList.remove('show');
 }
-function updatePresence() {
+function update() {
   if (!currentUser || !chatPin) return;
   
-  presenceRef = db.collection("chats").doc(chatPin)
-    .collection("presence").doc(currentUser.uid);
-  presenceRef.set({
+  Ref = db.collection("chats").doc(chatPin)
+    .collection("").doc(currentUser.uid);
+  Ref.set({
     uid: currentUser.uid,
     username: username,
     avatar: avatarURL,
     lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
     status: "active"
   }, { merge: true }).catch(e => {
-    console.log("Presence update error:", e);
+    console.log(" update error:", e);
   });
 }
-function startPresenceUpdates() {
-  updatePresence();
-  presenceInterval = setInterval(updatePresence, 30000);
+function startUpdates() {
+  update();
+  Interval = setInterval(update, 30000);
   window.addEventListener('beforeunload', () => {
-    if (presenceRef && currentUser && chatPin) {
+    if (Ref && currentUser && chatPin) {
       db.collection("chats").doc(chatPin)
-        .collection("presence").doc(currentUser.uid)
+        .collection("").doc(currentUser.uid)
         .delete()
-        .catch(e => console.log("Σφάλμα διαγραφής presence:", e));
+        .catch(e => console.log("Deletion error :", e));
     }
   });
 }
-function stopPresenceUpdates() {
-  if (presenceInterval) {
-    clearInterval(presenceInterval);
-    presenceInterval = null;
+function stopUpdates() {
+  if (Interval) {
+    clearInterval(Interval);
+    Interval = null;
   }
 }
 function listenToParticipants() {
@@ -1219,7 +1219,7 @@ function listenToParticipants() {
     unsubscribeParticipants();
   }
   unsubscribeParticipants = db.collection("chats").doc(chatPin)
-    .collection("presence")
+    .collection("")
     .onSnapshot(snapshot => {
       const count = snapshot.size;
       document.getElementById("participantCount").textContent = count;
@@ -1244,7 +1244,7 @@ function listenToParticipants() {
           roomName: roomName
         });
       }
-	  startPresenceUpdates();
+	  startUpdates();
       listenToParticipants();
       listenMessages();
     }
@@ -1395,15 +1395,15 @@ confirmDeleteBtn.onclick = async () => {
   try {
     confirmDeleteBtn.disabled = true;
     confirmDeleteBtn.textContent = '⏳ Deleting...';
-	stopPresenceUpdates();
+	stopUpdates();
     if (unsubscribeParticipants) {
       unsubscribeParticipants();
       unsubscribeParticipants = null;
     }
     const chatRef = db.collection('chats').doc(chatPin);
-	const presenceSnapshot = await chatRef.collection('presence').get();
+	const Snapshot = await chatRef.collection('').get();
     const batch1 = db.batch();
-    presenceSnapshot.forEach(doc => {
+    Snapshot.forEach(doc => {
       batch1.delete(doc.ref);
     });
     await batch1.commit();
@@ -1495,4 +1495,5 @@ document.getElementById("toggleGuide").addEventListener("click", function(){
 </script>
 </body>
 </html>
+
 
