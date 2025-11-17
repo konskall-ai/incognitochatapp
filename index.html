@@ -1447,12 +1447,12 @@ confirmDeleteBtn.onclick = async () => {
     deleteConfirmationModal.classList.remove('show');
     confirmDeleteBtn.disabled = false;
     confirmDeleteBtn.textContent = '🗑️ Delete Chat';
-    alert('✅ Chat successfully deleted!');
+    alert('✅ Chat deleted successfully!');
   } catch (error) {
     console.error('Error deleting chat:', error);
     alert('❌ Error deleting chat: ' + error.message);
     confirmDeleteBtn.disabled = false;
-    confirmDeleteBtn.textContent = '🗑️ Διαγραφή Chat';
+    confirmDeleteBtn.textContent = '🗑️ Delete Chat';
   }
 };
 // Close modal with Escape key
@@ -1495,5 +1495,3 @@ document.getElementById("toggleGuide").addEventListener("click", function(){
 </script>
 </body>
 </html>
-
-
