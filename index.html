@@ -842,7 +842,7 @@ h1 { font-size:2rem; font-weight:700; color:#3b82f6; margin:0; }
   <input id="avatarInput" type="text" placeholder="Profile photo URL (optional)" />
   <input id="roomNameInput" type="text" placeholder="Room name in Latin characters (e.g. myroom)" maxlength="30" />
   <input id="pinInput" type="text" placeholder="Room PIN" maxlength="12" />
-  <button id="saveUsernameBtn">Αποθήκευση</button>
+  <button id="saveUsernameBtn">Submit</button>
  <div id="infoBox" class="collapsible-card">
   <button id="toggleGuide" type="button" class="collapsible-btn" aria-expanded="false">
     <span>💡 Quick Start Guide</span>
@@ -880,9 +880,9 @@ h1 { font-size:2rem; font-weight:700; color:#3b82f6; margin:0; }
   <div class="emoji-grid" id="emojiGrid"></div>
 </div>
   <div id="formContainer">
-    <textarea id="msgInput" placeholder="Γράψε μήνυμα..." rows="1"></textarea>
+    <textarea id="msgInput" placeholder="Type a message..." rows="1"></textarea>
     <button id="sendBtn" disabled>Send</button>
-	<button id="emojiBtn" title="Επιλογέας Emoji"><svg width="25" height="25" viewBox="0 0 38 38" fill="none">
+	<button id="emojiBtn" title="Emoji Picker"><svg width="25" height="25" viewBox="0 0 38 38" fill="none">
     <circle cx="19" cy="19" r="16" fill="#FFD966" />
     <ellipse cx="13" cy="16" rx="2" ry="2.5" fill="#222"/>
     <ellipse cx="25" cy="16" rx="2" ry="2.5" fill="#222"/>
@@ -1497,3 +1497,4 @@ document.getElementById("toggleGuide").addEventListener("click", function(){
 </body>
 
 </html>
+
